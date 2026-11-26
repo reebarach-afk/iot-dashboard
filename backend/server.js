@@ -137,6 +137,15 @@ app.get('/api/readings/latest', protect, async (req, res, next) => {
     next(err);
   }
 });
+// DASHBOARD: list distinct devices
+app.get('/api/devices', protect, async (req, res, next) => {
+  try {
+    const devices = await Reading.distinct('device');
+    res.json(devices);
+  } catch (err) {
+    next(err);
+  }
+});
 // ERROR middleware
 app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
